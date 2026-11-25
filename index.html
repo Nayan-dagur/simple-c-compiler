@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Simple C Compiler</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <h1>Simple C Compiler</h1>
+        <p class="subtitle">Supports int variables, arithmetic (+, -, *, /), if-else, while loops, and printf.</p>
+
+        <div class="editor-section">
+            <label for="source-code">Source Code (C subset):</label>
+            <textarea id="source-code" rows="14" spellcheck="false">int a = 10;
+int b = 5;
+int sum = a + b * 2;
+
+if (sum > 15) {
+    printf("%d\n", sum);
+} else {
+    printf("%d\n", 0);
+}
+
+int i = 1;
+while (i <= 3) {
+    printf("%d\n", i);
+    i = i + 1;
+}</textarea>
+
+            <div class="buttons">
+                <button id="run-btn" type="button" onclick="compileCode()">Compile &amp; Run</button>
+                <button id="sample-btn" type="button" onclick="loadSample()">Load Sample</button>
+                <button id="clear-btn" type="button" onclick="clearAll()">Clear</button>
+            </div>
+        </div>
+
+        <div class="output-section">
+            <div class="box">
+                <h2>Program Output / Errors</h2>
+                <pre id="output-box">Click "Compile &amp; Run" to see output.</pre>
+            </div>
+
+            <div class="box">
+                <h2>Semantic Check</h2>
+                <pre id="semantic-box">-</pre>
+            </div>
+
+            <div class="box">
+                <h2>Intermediate Code (Three-Address Code)</h2>
+                <pre id="tac-box">-</pre>
+            </div>
+
+            <div class="box">
+                <h2>Tokens (Lexical Analysis)</h2>
+                <pre id="tokens-box">-</pre>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        var defaultSample = document.getElementById("source-code").value;
+
+        function compileCode() {
+            var code = document.getElementById("source-code").value;
+            var outputBox = document.getElementById("output-box");
+            var semanticBox = document.getElementById("semantic-box");
+            var tacBox = document.getElementById("tac-box");
+            var tokensBox = document.getElementById("tokens-box");
+
+            fetch("/compile", {
+                method: "POST",
+                headers: { "Content-Type": "text/plain" },
+                body: code
+            })
+            .then(function(response) {
+                return response.json();
+            })
+            .then(function(data) {
+                tokensBox.textContent = data.tokens || "-";
+                if (!data.success) {
+                    outputBox.className = "error-text";
+                    outputBox.textContent = data.error || "Compilation failed.";
+                    semanticBox.textContent = "-";
+                    tacBox.textContent = "-";
+                } else {
+                    outputBox.className = "";
+                    outputBox.textContent = data.output || "";
+                    semanticBox.textContent = data.semantic || "-";
+                    tacBox.textContent = data.tac || "-";
+                }
+            })
+            .catch(function() {
+                outputBox.className = "error-text";
+                outputBox.textContent = "Could not connect to compiler server (./mycc --web).";
+            });
+        }
+
+        function loadSample() {
+            document.getElementById("source-code").value = defaultSample;
+        }
+
+        function clearAll() {
+            document.getElementById("source-code").value = "";
+            document.getElementById("output-box").className = "";
+            document.getElementById("output-box").textContent = "-";
+            document.getElementById("semantic-box").textContent = "-";
+            document.getElementById("tac-box").textContent = "-";
+            document.getElementById("tokens-box").textContent = "-";
+        }
+    </script>
+</body>
+</html>

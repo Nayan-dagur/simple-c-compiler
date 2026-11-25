@@ -1,0 +1,114 @@
+/* Simple student-made stylesheet: easy to edit and customize */
+
+body {
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 14px;
+    background-color: #f4f4f4;
+    color: #222222;
+    margin: 0;
+    padding: 20px;
+}
+
+.container {
+    max-width: 900px;
+    margin: 0 auto;
+    background-color: #ffffff;
+    border: 1px solid #cccccc;
+    padding: 20px;
+}
+
+h1 {
+    font-size: 20px;
+    margin-top: 0;
+    margin-bottom: 6px;
+}
+
+.subtitle {
+    font-size: 13px;
+    color: #555555;
+    margin-top: 0;
+    margin-bottom: 16px;
+}
+
+label {
+    display: block;
+    font-weight: bold;
+    margin-bottom: 6px;
+}
+
+/* Code editor appearance */
+textarea#source-code {
+    width: 100%;
+    box-sizing: border-box;
+    font-family: "Courier New", Courier, monospace;
+    font-size: 14px;
+    line-height: 1.4;
+    padding: 10px;
+    border: 1px solid #999999;
+    background-color: #fafafa;
+    color: #111111;
+    resize: vertical;
+}
+
+/* Buttons */
+.buttons {
+    margin-top: 10px;
+    margin-bottom: 18px;
+}
+
+button {
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 13px;
+    padding: 7px 14px;
+    margin-right: 6px;
+    border: 1px solid #777777;
+    background-color: #e6e6e6;
+    color: #222222;
+    cursor: pointer;
+}
+
+button#run-btn {
+    background-color: #2b579a;
+    color: #ffffff;
+    border-color: #1f4173;
+}
+
+button:hover {
+    opacity: 0.9;
+}
+
+/* Output boxes */
+.output-section {
+    display: block;
+}
+
+.box {
+    border: 1px solid #cccccc;
+    background-color: #fafafa;
+    padding: 10px 12px;
+    margin-bottom: 14px;
+}
+
+.box h2 {
+    font-size: 14px;
+    margin-top: 0;
+    margin-bottom: 8px;
+    border-bottom: 1px solid #dddddd;
+    padding-bottom: 4px;
+}
+
+.box pre {
+    font-family: "Courier New", Courier, monospace;
+    font-size: 13px;
+    line-height: 1.4;
+    margin: 0;
+    white-space: pre-wrap;
+    word-wrap: break-word;
+    max-height: 220px;
+    overflow-y: auto;
+}
+
+.error-text {
+    color: #b00020;
+    font-weight: bold;
+}
